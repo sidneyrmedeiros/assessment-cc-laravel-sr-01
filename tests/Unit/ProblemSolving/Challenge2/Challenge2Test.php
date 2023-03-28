@@ -21,12 +21,12 @@ class Challenge2Test extends TestCase
     }
 
       public function test_case_4() {
-        $value = \Tests\Unit\ProblemSolving\Challenge2\Challenge2::diceFacesCalculator(1, 2, 1);
+        $value = \Tests\Unit\ProblemSolving\Challenge2\Challenge2::diceFacesCalculator(1, 3, 1);
         $this->assertEquals($value, 2);
     }
 
       public function test_case_5() {
-        $value = \Tests\Unit\ProblemSolving\Challenge2\Challenge2::diceFacesCalculator(3, 6, 3);
+        $value = \Tests\Unit\ProblemSolving\Challenge2\Challenge2::diceFacesCalculator(3, 5, 3);
         $this->assertEquals($value, 6);
     }
 
