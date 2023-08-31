@@ -22,4 +22,9 @@ class MonsterRepository implements MonsterRepositoryInterface
     {
         Monster::destroy($monsterId);
     }
+
+    public function getAllMonsters(): Collection
+    {
+        return Monster::get();
+    }
 }

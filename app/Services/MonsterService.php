@@ -90,4 +90,15 @@ class MonsterService
             Monster::create($inserted_data);
         }
     }
+
+    /**
+     * Get all monsters.
+     *
+     * @return Collection
+     *
+     */
+    public function getAll(): Collection
+    {
+        return $this->monsterRepository->getAllMonsters();
+    }
 }

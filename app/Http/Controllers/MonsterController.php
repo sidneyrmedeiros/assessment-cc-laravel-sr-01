@@ -29,6 +29,22 @@ class MonsterController extends Controller
     }
 
     /**
+     * Get all monsters.
+     *
+     * @return JsonResponse
+     *
+     */
+    public function index(): JsonResponse
+    {
+        return response()->json(
+            [
+                'data' => $this->monsterService->getAll()
+            ],
+            Response::HTTP_OK
+        );
+    }
+
+    /**
      * Create new monster.
      *
      * @param Request $request
@@ -105,7 +121,7 @@ class MonsterController extends Controller
                 return response()->json(['message' => 'File should be csv.'], Response::HTTP_BAD_REQUEST);
             }
 
-            if (($handle = fopen($file, "r")) !== FALSE) {
+            if (($handle = fopen($file, "r")) !== false) {
                 while (!feof($handle)) {
                     $rowData[] = fgetcsv($handle);
                 }
