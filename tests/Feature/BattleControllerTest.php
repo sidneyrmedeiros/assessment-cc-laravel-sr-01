@@ -10,11 +10,44 @@ class BattleControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    private $battle, $monster1, $monster2, $monster3, $monster4, $monster5, $monster6, $monster7;
+    private $battle;
+
+    private $monster1;
+
+    private $monster2;
+
+    private $monster3;
+
+    private $monster4;
+
+    private $monster5;
+
+    private $monster6;
+
+    private $monster7;
 
     public function setUp(): void
     {
         parent::setUp();
+        $this->monster1 = $this->createMonsters([
+            'name' => 'My monster Test',
+            'attack' => 20,
+            'defense' => 40,
+            'hp' => 70,
+            'speed' => 10,
+            'imageUrl' => '',
+        ]);
+
+        $this->monster2 = $this->createMonsters([
+            'name' => 'My monster Test 2',
+            'attack' => 2,
+            'defense' => 40,
+            'hp' => 70,
+            'speed' => 10,
+            'imageUrl' => '',
+        ]);
+
+        $this->createBattles();
     }
 
     public function test_should_get_all_battles_correctly()
@@ -38,7 +71,13 @@ class BattleControllerTest extends TestCase
 
     public function test_should_create_battle_correctly_with_monsterA_winning()
     {
-        // @TODO implement
+        //$monster = Monster::factory()->make();
+        $response = $this->postJson('api/battles', [
+            'monsterA' => $this->monster1->id,
+            'monsterB' => $this->monster2->id,
+        ])->assertStatus(Response::HTTP_CREATED)->json('data');
+
+        $this->assertEquals($this->monster1->id, $response['winner']);
     }
 
     public function test_should_create_battle_correctly_with_monsterB_winning()
@@ -63,7 +102,7 @@ class BattleControllerTest extends TestCase
 
     public function test_should_delete_a_battle_correctly()
     {
-        // @TODO implement
+        $this->deleteJson('api/battles/1')->assertStatus(Response::HTTP_NO_CONTENT);
     }
 
     public function test_should_delete_with_404_error_if_battle_does_not_exists()
