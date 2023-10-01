@@ -5,7 +5,6 @@ namespace Tests\Feature;
 use App\Models\Monster;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Response;
-use Illuminate\Http\UploadedFile;
 use Tests\TestCase;
 
 class MonsterControllerTest extends TestCase
@@ -23,7 +22,7 @@ class MonsterControllerTest extends TestCase
             'defense' => 40,
             'hp' => 70,
             'speed' => 10,
-            'imageUrl' => ''
+            'imageUrl' => '',
         ]);
     }
 
@@ -58,7 +57,7 @@ class MonsterControllerTest extends TestCase
             'defense' => $monster->defense,
             'hp' => $monster->hp,
             'speed' => $monster->speed,
-            'imageUrl' => $monster->imageUrl
+            'imageUrl' => $monster->imageUrl,
         ])->assertStatus(Response::HTTP_CREATED)->json('data');
 
         $this->assertEquals($monster->name, $response['name']);
