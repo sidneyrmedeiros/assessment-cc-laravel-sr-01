@@ -28,7 +28,36 @@ class Battle extends Model
      */
     protected $hidden = [
         'created_at',
-        'updated_at'
+        'updated_at',
     ];
 
+    /**
+     * Get the winner
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function winner(): BelongsTo
+    {
+        return $this->belongsTo(Monster::class);
+    }
+
+    /**
+     * Get the monsterA
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function monsterA(): BelongsTo
+    {
+        return $this->belongsTo(Monster::class);
+    }
+
+    /**
+     * Get the monsterB
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function monsterB(): BelongsTo
+    {
+        return $this->belongsTo(Monster::class);
+    }
 }

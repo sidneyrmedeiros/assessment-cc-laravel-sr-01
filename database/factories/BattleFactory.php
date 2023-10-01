@@ -20,7 +20,7 @@ class BattleFactory extends Factory
         return [
             'monsterA' => Monster::first()->id,
             'monsterB' => Monster::first()->id,
-            'winner' => Monster::first()->id
+            'winner' => Monster::first()->id,
         ];
     }
 }

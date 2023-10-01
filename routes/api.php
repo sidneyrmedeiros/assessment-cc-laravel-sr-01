@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\MonsterController;
 use App\Http\Controllers\BattleController;
+use App\Http\Controllers\MonsterController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,4 +25,6 @@ Route::controller(MonsterController::class)->prefix('monsters')->group(function 
 
 Route::controller(BattleController::class)->prefix('battles')->group(function () {
     Route::get('', 'index');
+    Route::post('', 'store');
+    Route::delete('{id}', 'remove');
 });

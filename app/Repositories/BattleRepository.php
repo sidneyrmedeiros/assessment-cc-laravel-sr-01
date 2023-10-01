@@ -12,4 +12,19 @@ class BattleRepository implements BattleRepositoryInterface
     {
         return Battle::with('winner')->with('monsterA')->with('monsterB')->get();
     }
+
+    public function getBattleById($battleId): Battle
+    {
+        return Battle::with('winner')->with('monsterA')->with('monsterB')->find($battleId);
+    }
+
+    public function createBattle(array $newBattle): Battle
+    {
+        return Battle::create($newBattle);
+    }
+
+    public function removeBattle($battleId): void
+    {
+        Battle::destroy($battleId);
+    }
 }
