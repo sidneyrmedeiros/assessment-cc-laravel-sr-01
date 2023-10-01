@@ -3,25 +3,23 @@
 namespace App\Http\Controllers;
 
 use App\Services\MonsterService;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Response;
-use Illuminate\Http\Request;
 use Exception;
 use Illuminate\Database\QueryException;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class MonsterController extends Controller
 {
     /**
-     *
-     * @var $monsterService
+     * @var
      */
     protected $monsterService;
 
     /**
      * MonsterService constructor.
      *
-     * @param MonsterService $monsterService
-     *
+     * @param  MonsterService  $monsterService
      */
     public function __construct(MonsterService $monsterService)
     {
@@ -32,13 +30,12 @@ class MonsterController extends Controller
      * Get all monsters.
      *
      * @return JsonResponse
-     *
      */
     public function index(): JsonResponse
     {
         return response()->json(
             [
-                'data' => $this->monsterService->getAll()
+                'data' => $this->monsterService->getAll(),
             ],
             Response::HTTP_OK
         );
@@ -47,10 +44,8 @@ class MonsterController extends Controller
     /**
      * Create new monster.
      *
-     * @param Request $request
-     *
+     * @param  Request  $request
      * @return JsonResponse
-     *
      */
     public function store(Request $request): JsonResponse
     {
@@ -60,12 +55,12 @@ class MonsterController extends Controller
             'defense',
             'hp',
             'speed',
-            'imageUrl'
+            'imageUrl',
         ]);
 
         return response()->json(
             [
-                'data' => $this->monsterService->createMonster($newMonster)
+                'data' => $this->monsterService->createMonster($newMonster),
             ],
             Response::HTTP_CREATED
         );
@@ -74,10 +69,8 @@ class MonsterController extends Controller
     /**
      * Update a monster.
      *
-     * @param Request $request
-     *
+     * @param  Request  $request
      * @return JsonResponse
-     *
      */
     public function update(Request $request): JsonResponse
     {
@@ -88,27 +81,27 @@ class MonsterController extends Controller
             'defense',
             'hp',
             'speed',
-            'imageUrl'
+            'imageUrl',
         ]);
 
         $result = $this->monsterService->getMonsterById($monsterId);
         $this->monsterService->updateMonster($monsterId, $newMonster);
+
         return response()->json('', Response::HTTP_OK);
     }
 
     /**
      * Remove a monster.
      *
-     * @param Request $request
-     *
+     * @param  Request  $request
      * @return JsonResponse
-     *
      */
     public function remove(Request $request): JsonResponse
     {
         $monsterId = $request->route('id');
         $result = $this->monsterService->getMonsterById($monsterId);
         $this->monsterService->removeMonster($monsterId);
+
         return response()->json('', Response::HTTP_NO_CONTENT);
     }
 
@@ -117,12 +110,12 @@ class MonsterController extends Controller
         $file = $request->file('file');
         if ($file) {
             $ext = $file->getClientOriginalExtension();
-            if (!in_array($ext, ['csv'])) {
+            if (! in_array($ext, ['csv'])) {
                 return response()->json(['message' => 'File should be csv.'], Response::HTTP_BAD_REQUEST);
             }
 
-            if (($handle = fopen($file, "r")) !== false) {
-                while (!feof($handle)) {
+            if (($handle = fopen($file, 'r')) !== false) {
+                while (! feof($handle)) {
                     $rowData[] = fgetcsv($handle);
                 }
 
@@ -130,6 +123,7 @@ class MonsterController extends Controller
 
                 try {
                     $this->monsterService->importMonster($rowData, $csv_data);
+
                     return response()->json(['data' => 'Records were imported successfully.'], Response::HTTP_OK);
                 } catch (QueryException $e) {
                     return response()->json(['message' => 'Incomplete data, check your file.'], Response::HTTP_BAD_REQUEST);
@@ -141,5 +135,4 @@ class MonsterController extends Controller
 
         return response()->json(['message' => 'Wrong data mapping.'], Response::HTTP_BAD_REQUEST);
     }
-
 }

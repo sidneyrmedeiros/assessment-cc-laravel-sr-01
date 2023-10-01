@@ -2,8 +2,8 @@
 
 namespace Tests;
 
-use App\Models\Monster;
 use App\Models\Battle;
+use App\Models\Monster;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 
 abstract class TestCase extends BaseTestCase
